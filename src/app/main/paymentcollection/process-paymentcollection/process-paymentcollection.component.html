@@ -1,0 +1,117 @@
+<div class="container">
+    <h1>Payment Collection</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="customerPaymentId">Customer Name:</label>
+        <select id="customerPaymentId" name="customerPaymentId" (change)="onChange()" [(ngModel)]="customerSelected" required [ngModelOptions]="{standalone: true}">
+            <option [value]="item.id" *ngFor="let item of customerList">{{ item.name }}</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label for="orderPaymentId">Order Id:</label>
+        <select id="orderPaymentId" name="orderPaymentId" (change)="onChangeOrder()" [(ngModel)]="orderSelected" required [ngModelOptions]="{standalone: true}">
+            <option [value]="item.id" *ngFor="let item of orderList">{{ item.orderId }}</option>
+        </select>
+      </div>
+      <h2>Payment Details</h2>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Payment Type</th>
+              <th>Estimated Date</th>
+              <th>Amt to be Paid</th>
+              <th>Actual Date</th>
+              <th>Actual Paid</th>
+              <th>Payment Mode</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>First Payment</td>
+              <td>
+                <input type="date"  formControlName="customerEstimatedFirstPaymentDate" readonly>
+              </td>
+              <td>
+                <input type="text" formControlName="customerEstimatedFirstPayment" placeholder="Amount to be Paid" readonly>
+              </td>
+              <td>
+                <input type="date" formControlName="customerActualFirstPaymentDate" required>
+              </td>
+              <td>
+                <input type="text" formControlName="customerActualFirstPayment" (change)="changeAmountVal()" placeholder="Actual Amount" required>
+              </td>
+              <td>
+                <select id="paymentMode" name="paymentMode" [(ngModel)]="paymentSelectedOne" required [ngModelOptions]="{standalone: true}">
+                    <option [value]="item.id" *ngFor="let item of paymentList">{{ item.orderChoices }}</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Second Payment</td>
+              <td>
+                <input type="date" formControlName="customerEstimatedSecondPaymentDate" readonly>
+              </td>
+              <td>
+                <input type="text" formControlName="customerEstimatedSecondPayment" placeholder="Amount to be Paid" readonly>
+              </td>
+              <td>
+                <input type="date" formControlName="customerActualSecondPaymentDate" required>
+              </td>
+              <td>
+                <input type="text" formControlName="customerActualSecondPayment" (change)="changeAmountVal()" placeholder="Actual Amount" required>
+              </td>
+              <td>
+                <select id="paymentMode" name="paymentMode" [(ngModel)]="paymentSelectedTwo" required [ngModelOptions]="{standalone: true}">
+                    <option [value]="item.id" *ngFor="let item of paymentList">{{ item.orderChoices }}</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Third Payment</td>
+              <td>
+                <input type="date" formControlName="customerEstimatedThirdPaymentDate"  readonly>
+              </td>
+              <td>
+                <input type="text" formControlName="customerEstimatedThirdPayment" placeholder="Amount to be Paid" readonly>
+              </td>
+              <td>
+                <input type="date" formControlName="customerActualThirdPaymentDate" required>
+              </td>
+              <td>
+                <input type="text" formControlName="customerActualThirdPayment" (change)="changeAmountVal()" placeholder="Actual Amount" required>
+              </td>
+              <td>
+                <select id="paymentMode" name="paymentMode" [(ngModel)]="paymentSelectedThree" required [ngModelOptions]="{standalone: true}">
+                    <option [value]="item.id" *ngFor="let item of paymentList">{{ item.orderChoices }}</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>  
+  
+      <div class="payment-information" *ngIf="customerAmountPending > 0">
+        <h2>Payment Information</h2>
+        <div class="table-responsive">
+          <table id="payment-table">
+            <tr>
+              <td>Total amount to be paid</td>
+              <td>{{ customerAmountToBePaid }}</td>
+            </tr>
+            <tr>
+              <td>Amount paid (current)</td>
+              <td>{{ customerAmountPaid }}</td>
+            </tr>
+            <tr>
+              <td>Pending Amount</td>
+              <td>{{ customerAmountPending }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>  
+      <button type="submit" [disabled]="form.invalid" class="rightone">Submit</button>
+    </form>
+  </div>
+  

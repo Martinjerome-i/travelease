@@ -1,0 +1,199 @@
+<!-- order-entry.component.html -->
+
+<div class="container">
+    <!-- Stepper -->
+    <div class="stepper">
+        <div class="step" [class.active]="currentStep === 0">Order Entry</div>
+        <div class="step" [class.active]="currentStep === 1">Additional Information</div>
+        <div class="step" [class.active]="currentStep === 2">Payment Details</div>
+    </div>
+    <!-- Step 1: Order Entry -->
+    <div class="step-content" [class.active]="currentStep === 0">
+        <form [formGroup]="form" (ngSubmit)="nextStep()">
+            <div class="form-group">
+                <label for="customerName">Customer Name:</label>
+                <select id="customerName" name="customerName" [(ngModel)]="customerSelected" required [ngModelOptions]="{standalone: true}">
+                    <option [value]="item.id" *ngFor="let item of customerList">{{ item.name }}</option>
+                </select>
+            </div>
+            <div class="form-group">
+              <label for="paymentMode">Payment Mode:</label>
+              <select id="paymentMode" name="paymentMode" [(ngModel)]="paymentSelected" required [ngModelOptions]="{standalone: true}">
+                  <option [value]="item.id" *ngFor="let item of paymentList">{{ item.orderChoices }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+                <label for="destination">Destination:</label>
+                <input type="text" id="destination" name="destination" formControlName="destination" placeholder="Destination" required>
+            </div>
+            <div class="form-group">
+                <label for="route">Route:</label>
+                <input type="text" id="route" name="route" placeholder="Route" formControlName="route" required >
+            </div>
+            <div class="form-group">             
+                <label for="modeOfService">Service required:</label>
+                <select id="modeOfService" name="modeOfService" [(ngModel)]="supplierModeOfServiceSelected" required [ngModelOptions]="{standalone: true}">
+                    <option [value]="item.id" *ngFor="let item of supplierModeOfService">{{ item.serviceChoices }}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="visaService">Visa Service:</label>
+                <select id="visaService" name="visaService" [(ngModel)]="visaSelected" required [ngModelOptions]="{standalone: true}">
+                    <option [value]="item.id" *ngFor="let item of visaList">{{ item.visaChoices }}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="dateOfTravel">Date Of Travel:</label>
+                <input type="date" id="dateOfTravel" name="dateOfTravel" formControlName="dateOfTravel" required>
+            </div>
+            <button type="submit" class="rightone">Next</button>
+        </form>
+    </div>
+    <!-- Step 2: Additional Information -->
+    <div class="step-content" [class.active]="currentStep === 1">
+        <form [formGroup]="form" (ngSubmit)="nextStep()">
+            <div class="form-group">
+                <label for="pricePerPax">Price Per Pax:</label>
+                <input type="text" id="pricePerPax" name="pricePerPax" formControlName="pricePerPax" placeholder="Price per Pax" required>
+            </div>
+            <div class="form-group">
+                <label for="noOfPax">Number Per Pax:</label>
+                <input type="text" id="noOfPax" name="noOfPax" formControlName="noOfPax" placeholder="Number of Pax" required>
+            </div>
+            <div class="form-group">
+                <label for="totalOrderValue">Total Order Value:</label>
+                <input type="text" id="totalOrderValue" name="totalOrderValue" formControlName="totalOrderValue" placeholder="Total Order Value" required readonly>
+            </div>
+            <button type="button" (click)="prevStep()">Previous</button>
+            <button type="submit" class="righttwo">Next</button>
+        </form>
+    </div>
+    <!-- Step 3: Additional Information -->
+    <div class="step-content" [class.active]="currentStep === 2">
+        <form  [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="default-details">
+                <h2>Payment Estimation</h2>
+                <div class="form-group">
+                  <label for="totalOrderValue">Total Order Value:</label>
+                  <input type="text" id="totalOrderValue" name="totalOrderValue" formControlName="totalOrderValue"  placeholder="" required readonly>
+                </div>
+                <div class="table-responsive">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Payment Type</th>
+                        <th>Estimated Date</th>
+                        <th>Estimated Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>First Payment</td>
+                        <td>
+                          <input type="date"  formControlName="customerEstimatedFirstPaymentDate" required>
+                        </td>
+                        <td>
+                          <input type="text" formControlName="customerEstimatedFirstPayment"  placeholder="Amount to be Paid" required>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Second Payment</td>
+                        <td>
+                          <input type="date" formControlName="customerEstimatedSecondPaymentDate" required>
+                        </td>
+                        <td>
+                          <input type="text" formControlName="customerEstimatedSecondPayment" placeholder="Amount to be Paid" required>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Third Payment</td>
+                        <td>
+                          <input type="date" formControlName="customerEstimatedThirdPaymentDate" required>
+                        </td>
+                        <td>
+                          <input type="text" formControlName="customerEstimatedThirdPayment" placeholder="Amount to be Paid" required>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              
+              <div class="default-details">
+                <h2>Supplier Details</h2>
+                <div class="table-responsive">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Service Mode</th>
+                        <th>Supplier Name</th>
+                        <th>Booking Ref Number</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                            <select id="modeOfService" name="modeOfService" (change)="onModeChange()" [(ngModel)]="supplierModeOfServiceSelected" required [ngModelOptions]="{standalone: true}">
+                                <option [value]="item.id" *ngFor="let item of supplierModeOfService">{{ item.serviceChoices }}</option>
+                            </select>
+                        </td>
+                        <td>           
+                            <select id="nameOfSupplier" name="nameOfSupplier" [(ngModel)]="supplierSelected" required [ngModelOptions]="{standalone: true}">
+                                <option [value]="item.id" *ngFor="let item of supplierFilterList">{{ item.nameOfSupplier }}</option>
+                            </select>
+                        </td>
+                        <td>                           
+                            <input type="text" formControlName="bookingReferenceNumber" placeholder="Booking Ref num" required>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+                <h2>Supplier Payment</h2>
+                <div class="table-responsive">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Payment Type</th>
+                        <th>Estimated Date</th>
+                        <th>Estimated Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>First Payment</td>
+                        <td>
+                          <input type="date" formControlName="supplierEstimatedFirstPaymentDate" required>
+                        </td>
+                        <td>
+                          <input type="text" formControlName="supplierEstimatedFirstPayment" placeholder="Amount to be Paid" required>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Second Payment</td>
+                        <td>
+                          <input type="date" formControlName="supplierEstimatedSecondPaymentDate" required>
+                        </td>
+                        <td>
+                          <input type="text" formControlName="supplierEstimatedSecondPayment" placeholder="Amount to be Paid" required>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Third Payment</td>
+                        <td>
+                          <input type="date" formControlName="supplierEstimatedThirdPaymentDate" required>
+                        </td>
+                        <td>
+                          <input type="text" formControlName="supplierEstimatedThirdPayment" placeholder="Amount to be Paid" required>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div> 
+              </div>
+            <button type="button" (click)="prevStep()">Previous</button>
+            <button type="button" (click)="onSubmit()" class="rightthree">submit</button>
+        </form>
+    </div>
+</div>

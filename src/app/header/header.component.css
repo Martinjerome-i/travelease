@@ -1,0 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif; /* Add a default font-family */
+}
+
+.header_navbar {
+    background-color: #fff;
+    padding: 5px 150px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Fix the header at the top */
+    top: 0; /* Align the header at the top */
+    left: 0; /* Align the header to the left edge */
+    right: 0; /* Align the header to the right edge */
+    z-index: 1000; /* Ensure the header is above other content */
+}
+
+.logo {
+    width: 150px; /* Adjust as needed */
+}
+
+.logo img {
+    max-width: 100%; /* Adjust to fit the container */
+}
+
+.nav_links {
+    display: flex;
+    gap: 20px; /* Space between links */
+}
+
+.nav_links a {
+    font-size: 18px;
+    padding: 26px 20px;
+    text-decoration: none; /* Remove underline */
+    color: #000; /* Initial color */
+    transition: color 0.3s, transform 0.3s, border-bottom-color 0.3s; /* Smooth transition */
+    border-bottom: 6px solid transparent; /* Initial transparent border */
+}
+
+.nav_links a:hover {
+    color: #EEC41E; /* Color on hover */
+    transform: scale(1.1); /* Scale up on hover */
+    border-bottom-color: #EEC41E; /* Border bottom on hover */
+}
+
+/* Add a different style for the active link */
+.nav_links a.active {
+    color: #EEC41E; /* Color when active */
+    border-bottom-color: #EEC41E; /* Border color when active */
+}
+
+/* Ensure the main content has enough top margin to avoid being hidden under the fixed header */
+.main-content {
+    margin-top: 80px; /* Adjust this value based on the height of the header */
+}

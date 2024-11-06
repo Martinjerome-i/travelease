@@ -1,0 +1,32 @@
+<div class="container">
+    <h1>Supplier Registration</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="nameOfSupplier">Supplier Name:</label>
+            <input type="text" id="nameOfSupplier" name="nameOfSupplier" formControlName="nameOfSupplier" placeholder="Supplier Name" required>
+        </div>
+        <div class="form-group">
+            <label for="modeOfService">Mode Of Service:</label>
+            <select id="modeOfService" name="modeOfService" [(ngModel)]="supplierModeOfServiceSelected" required [ngModelOptions]="{standalone: true}">
+                <option [value]="item.id" *ngFor="let item of supplierModeOfService">{{ item.serviceChoices }}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="gstNo">GST No:</label>
+            <input type="text" id="gstNo" name="gstNo" formControlName="gstNo" placeholder="GST" required>
+        </div>
+        <div class="form-group">
+            <label for="contact">Contact Number:</label>
+            <input type="text" id="contact" name="contact" formControlName="contact" placeholder="contact Number" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" formControlName="email" placeholder="Mail Id" required>
+        </div>
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" formControlName="address" placeholder="Address" required>
+        </div>
+        <button type="submit" class="right">Submit Supplier</button>
+    </form>
+</div>
